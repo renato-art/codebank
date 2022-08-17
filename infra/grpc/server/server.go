@@ -8,6 +8,7 @@ import (
 	"github.com/simplemoney/codebank/infra/grpc/service"
 	"github.com/simplemoney/codebank/usecase"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type GRPCServer struct {
@@ -19,9 +20,9 @@ func NewGRPCServer() GRPCServer {
 }
 
 func (g GRPCServer) Serve() {
-	lis, err := net.Listen("tpc", "0.0.0.0:50052")
+	lis, err := net.Listen("tcp", "0.0.0.0:50052")
 	if err != nil {
-		log.Fatalf("could not listen tpc port")
+		log.Fatalf("could not listen tcp port")
 	}
 	transactionService := service.NewTransactionService()
 	transactionService.ProcessTransactionUseCase = g.ProcessTransactionUseCase
