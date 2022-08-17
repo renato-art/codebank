@@ -26,6 +26,7 @@ func (g GRPCServer) Serve() {
 	transactionService := service.NewTransactionService()
 	transactionService.ProcessTransactionUseCase = g.ProcessTransactionUseCase
 	grpcServer := grpc.NewServer()
+	reflection.Register(grpcServer)
 	pb.RegisterPaymentServiceServer(grpcServer, transactionService)
 	grpcServer.Serve(lis)
 }
